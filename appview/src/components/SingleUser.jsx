@@ -5,23 +5,22 @@ import customFetch from "../utils";
 function SingleUser({ user }) {
   const queryClient = useQueryClient();
 
-  const { mutate: deleteUser, isLoading } = useMutation({
+  const { mutate: deleteUser, isPending } = useMutation({
     mutationFn: () => customFetch.patch("/" + user.id),
     onSuccess: queryClient.invalidateQueries(),
   });
   return (
-    <article className="single-user">
-      <div>
-        <p>Id: {user.id}</p>
-        <p>Name: {user.name}</p>
-        <p>Age: {user.age}</p>
-        <p>Job: {user.job}</p>
-
-        <button onClick={() => deleteUser()} disabled={isLoading}>
+    <tr className="user-data">
+      <td>{user.id}</td>
+      <td>{user.name}</td>
+      <td>{user.job}</td>
+      <td>{user.age}</td>
+      <td>
+        <button onClick={deleteUser} disabled={isPending}>
           Delete
         </button>
-      </div>
-    </article>
+      </td>
+    </tr>
   );
 }
 

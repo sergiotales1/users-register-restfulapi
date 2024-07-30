@@ -1,21 +1,53 @@
-html,
-body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  width: 90vw;
+  max-width: 40rem;
+  border: 3px solid black;
+  margin: 0 auto;
+  margin-top: 8rem;
 }
 
 .form-container {
+  padding: 10px 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 1rem;
   justify-content: center;
   border: 1px solid black;
 }
 
-.single-user {
-  border: 1px solid red;
+.form-container button {
+  padding: 10px;
+}
+
+.users-table {
+  width: 100%;
+  border-top: 0;
+}
+
+th {
+  padding: 10px 5px;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  border-right: 1px solid black;
+}
+
+th:last-child {
+  border: none;
+}
+
+td {
+  text-align: start;
+  padding: 10px;
+  border: 1px solid black;
+  width: 50%;
+}
+
+tr {
+  border: 1px solid black;
 }

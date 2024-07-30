@@ -14,10 +14,19 @@ function Users() {
   if (isError) return <p>There was an error</p>;
   return (
     <div>
-      <h1>Users:</h1>
-      {data?.data?.usersList.map((user) => {
-        return <SingleUser key={user.id} user={user} />;
-      })}
+      <div className="users-container">
+        <table className="users-table">
+          <tr className="users-header">
+            <th>id</th> <th>name</th>
+            <th>job</th>
+            <th>age</th>
+            <th></th>
+          </tr>
+          {data?.data?.usersList.map((user) => {
+            return <SingleUser key={user.id} user={user} />;
+          })}
+        </table>
+      </div>
     </div>
   );
 }

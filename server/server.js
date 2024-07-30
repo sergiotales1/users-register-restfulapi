@@ -64,6 +64,7 @@ app.patch("/api/users/:id", async (req, res) => {
   const newUsersList = usersList.filter((user) => user.id !== req.params.id);
   const data = JSON.stringify(newUsersList);
   await fs.writeFile(localStoragePath, data);
+  res.json(data);
 });
 
 app.listen(port, () => {

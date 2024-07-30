@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import customFetch from "../utils";
+import { toast } from "react-toastify";
 
 function Form() {
   const [name, setName] = useState("");
@@ -9,13 +10,21 @@ function Form() {
 
   const queryClient = useQueryClient();
 
-  const { mutate: createUser, isPending } = useMutation({
+  const {
+    mutate: createUser,
+    isPending,
+    error,
+  } = useMutation({
     mutationFn: () => customFetch.post("/", { name, job, age }),
     onSuccess: () => {
       setName("");
       setAge("");
       setJob("");
       queryClient.invalidateQueries();
+      toast.success("User added");
+    },
+    onError: () => {
+      toast.error(error.response.data);
     },
   });
   const handleSubmit = (e) => {
