@@ -37,10 +37,6 @@ th {
   border-right: 1px solid black;
 }
 
-th:last-child {
-  border: none;
-}
-
 td {
   text-align: start;
   padding: 10px;

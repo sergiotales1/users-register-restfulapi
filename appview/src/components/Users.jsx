@@ -6,7 +6,6 @@ function Users() {
   const { isLoading, data, isError } = useQuery({
     queryKey: ["users"],
     queryFn: () => customFetch.get("/"),
-    onSuccess: () => console.log("fetched: " + data),
     onError: () => console.log("errror"),
   });
 
@@ -16,13 +15,12 @@ function Users() {
     <div>
       <div className="users-container">
         <table className="users-table">
-          <tr className="users-header">
-            <th>id</th> <th>name</th>
-            <th>job</th>
-            <th>age</th>
-            <th></th>
-          </tr>
-          {data?.data?.usersList.map((user) => {
+          <thead>
+            <tr className="users-header">
+              <th>id</th><th>name</th><th>job</th><th>age</th>
+            </tr>
+          </thead>
+          {data.data.usersList.map((user) => {
             return <SingleUser key={user.id} user={user} />;
           })}
         </table>

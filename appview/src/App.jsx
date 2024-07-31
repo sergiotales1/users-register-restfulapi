@@ -1,4 +1,3 @@
-import "./App.css";
 import Form from "./components/Form";
 import Users from "./components/Users";
 import "react-toastify/dist/ReactToastify.css";
