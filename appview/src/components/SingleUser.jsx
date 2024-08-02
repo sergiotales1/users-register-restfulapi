@@ -10,9 +10,9 @@ function SingleUser({ user }) {
     mutationFn: async () => {
       customFetch.delete("/" + user.id);
     },
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success("User Deleted");
-      await queryClient.invalidateQueries();
+      queryClient.invalidateQueries();
     },
   });
   return (

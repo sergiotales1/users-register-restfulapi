@@ -6,7 +6,6 @@ function Users() {
   const { isLoading, data, isError } = useQuery({
     queryKey: ["users"],
     queryFn: () => customFetch.get("/"),
-    onError: () => console.log("errror"),
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -17,7 +16,10 @@ function Users() {
         <table className="users-table">
           <thead>
             <tr className="users-header">
-              <th>id</th><th>name</th><th>job</th><th>age</th>
+              <th>id</th>
+              <th>name</th>
+              <th>job</th>
+              <th>age</th>
             </tr>
           </thead>
           {data.data.usersList.map((user) => {

@@ -4,6 +4,7 @@ import fs from "fs/promises";
 import { nanoid } from "nanoid";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
+import morgan from "morgan";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,7 +16,6 @@ async function setNewUser(newUser) {
     usersList = [...usersList, newUser];
     const data = JSON.stringify(usersList);
     await fs.writeFile(localStoragePath, data);
-    console.log("users.json updated");
   } catch (error) {
     console.log(`error trying to write users.json ${error}`);
   }
@@ -24,7 +24,7 @@ async function setNewUser(newUser) {
 async function getUsersList() {
   try {
     const data = await fs.readFile(localStoragePath, "utf8");
-    console.log("Success reading the users list file");
+    console.log("refetch");
     return JSON.parse(data);
   } catch (error) {
     console.log(`Error trying to get users list ${error}`);
@@ -35,6 +35,7 @@ async function getUsersList() {
 const app = express();
 const port = 5000;
 
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
@@ -43,7 +44,7 @@ app.get("/", (_, res) => {
 });
 
 // Send the usersList as response
-app.get("/api/users", async (_, res) => {
+app.get("/api/users", (_, res) => {
   res.json({ usersList });
 });
 
@@ -57,14 +58,15 @@ app.post("/api/users", async (req, res) => {
   const id = nanoid();
   const newUser = { id, name, job, age };
   await setNewUser(newUser);
-  res.json(newUser);
+  res.json({ user: newUser });
 });
 
-app.patch("/api/users/:id", async (req, res) => {
-  const newUsersList = usersList.filter((user) => user.id !== req.params.id);
-  const data = JSON.stringify(newUsersList);
+app.delete("/api/users/:id", async (req, res) => {
+  usersList = usersList.filter((user) => user.id !== req.params.id);
+  const data = JSON.stringify(usersList);
   await fs.writeFile(localStoragePath, data);
-  res.json(data);
+
+  res.json({ usersList });
 });
 
 app.listen(port, () => {
