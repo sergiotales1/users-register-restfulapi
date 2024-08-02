@@ -1,17 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../utils";
-import { toast } from "react-toastify";
 
+import { toast } from "react-toastify";
 /* eslint-disable react/prop-types */
 function SingleUser({ user }) {
   const queryClient = useQueryClient();
 
   const { mutate: deleteUser, isPending } = useMutation({
-    mutationFn: () => {
-      toast.success("User Deleted");
+    mutationFn: async () => {
       customFetch.delete("/" + user.id);
     },
-    onSuccess: queryClient.invalidateQueries(),
+    onSuccess: async () => {
+      toast.success("User Deleted");
+      await queryClient.invalidateQueries();
+    },
   });
   return (
     <tbody>
